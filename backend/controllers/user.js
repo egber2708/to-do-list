@@ -4,10 +4,11 @@ const User = require('../models/user');
 
 
 exports.getUserByEmail =(req, res, next) => {
-    const userId = req.body.user.id;
-    User.findOne({ where: {email: req.body.user.email, name: req.body.user.name} })
-    .then(res=>{
-        res.status(200).json({status:true, data: result});
+    console.log(req.body);
+    User.findAll({ where: {email: req.body.user.email, name: req.body.user.name} })
+    .then(result=>{
+        if(result.length) return res.status(200).json({status:true, data: result});
+        res.status(400).json({status:false, data: 'Invalid User'})
        })
     .catch(err=>{
         res.status(400).json({status:false, data: err})
@@ -17,18 +18,19 @@ exports.getUserByEmail =(req, res, next) => {
 exports.getUserTasks =(req, res, next) => {
     const userId = req.body.user.id;
     User.findByPk(userId, { include: Task })
-    .then(res=>{
-        res.status(200).json({status:true, data: result});
+    .then(result=>{
+        res.status(200).json({status:true, result});
        })
     .catch(err=>{
-        res.status(400).json({status:false, data: err})
+        res.status(400).json({status:false,  err})
        });
 }
 
 exports.addUser = (req, res, next) => {
-  User.create(req.body.user)
+  console.log({...req.body.user});
+  User.create({...req.body.user})
     .then((result) => {
-      res.status(200).json({status:true, data: result});
+      res.status(200).json({status:true, data: 'Your user has been successfully register'});
     })
-    .catch(err =>  res.status(400).json({status:false, data: err}));
+    .catch(err =>  res.status(400).json({status:false,  err}));
 };

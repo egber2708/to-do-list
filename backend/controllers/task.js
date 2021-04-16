@@ -5,7 +5,7 @@ const Task = require('../models/task');
 
 exports.getTasks = async (req, res, next) => {
     Task.findAll({ include: Attachment })
-        .then(res=>{
+        .then(result=>{
              res.status(200).json({status:true, data: result});
             })
         .catch(err=>{
@@ -15,7 +15,7 @@ exports.getTasks = async (req, res, next) => {
 
 exports.getTasksByUser = (req, res, next) => {
     Task.findAll({where: { userId: req.body.user.id }, include: Attachment })
-        .then(res=>{
+        .then(result=>{
              res.status(200).json({status:true, data: result});
             })
         .catch(err=>{
@@ -26,7 +26,7 @@ exports.getTasksByUser = (req, res, next) => {
 exports.getTaskById =(req, res, next) => {
     const taskId = req.body.task.id;
     Task.findByPk(taskId, { include: Attachment })
-    .then(res=>{
+    .then(result=>{
         res.status(200).json({status:true, data: result});
        })
     .catch(err=>{

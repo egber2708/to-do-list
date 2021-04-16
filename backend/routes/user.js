@@ -4,7 +4,7 @@ const router = express.Router();
 
 
 // /api/user/signin  => POST
-router.post('/signin ', userController.adduser);
+router.post('/signup', userController.addUser);
 
 // /api/user/login => POST
 router.post('/login', userController.getUserByEmail);

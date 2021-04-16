@@ -15,6 +15,7 @@ const User = sequelize.define('User', {
     email:{
         type: Sequelize.STRING,
         allowNull: false,
+        unique: 'compositeIndex',
     }
 })
 
